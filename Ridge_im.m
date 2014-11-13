@@ -1,4 +1,4 @@
-%NRSR Code
+%NRSR Release 1.0
 %by Li Yanghao
 
 clear all;clc;
@@ -14,11 +14,8 @@ im_dir = dir( fullfile(im_path, '*bmp') );
 im_num = length( im_dir );
 
 
-for pp = [9],
-    for ss = [100000],
-
-patch_size = pp;  
-nSmp        = ss;  %number of patches to sample
+patch_size = 9;  
+nSmp        = 100000;  %number of patches to sample
 par.nFactor = 3;   %magnification factor
 par.win = patch_size;  %patch size
 par.step = 1;          %sample patch step   
@@ -34,11 +31,10 @@ build_params.build_weight = 0.5;
 build_params.memory_weight = 0; 
 [index, parameters] = flann_build_index(dataset, build_params);
 
-for lambda = [ 0.15],
-     param.lambda = lambda;   %ridge parameter
-for nnn = [9],                %neighbor number
-    tot = 0;
-    for img = 1:im_num,
+lambda = 0.15;   %ridge parameter
+nnn = 9;                %neighbor number
+tot = 0;
+for img = 1:im_num,
 
     imHR = imread( fullfile(im_path, im_dir(img).name) );
     
@@ -103,7 +99,7 @@ for nnn = [9],                %neighbor number
 
         result = func_improve_NL_im(imLR, imHR, imBicubic, h1, v1, l1, r1 );
         
-        fprintf('%d %d %d %s Result: %2.2f \n',pp, ss, nnn, im_dir(img).name, csnr(imHR, result, 0, 0));
+        fprintf('%d %d %d %s Result: %2.2f \n',patch_size, nSmp, nnn, im_dir(img).name, csnr(imHR, result, 0, 0));
         tot = tot + csnr(imHR, result, 0, 0);
         
         im_rgb = zeros(size(ori_HR));
@@ -121,13 +117,9 @@ for nnn = [9],                %neighbor number
     
         savefile( imLR, ori_HR, im_rgb, result, h1, v1, imB, im_dir(img).name);
 
-    end
-   fprintf('%f %d %d  %d, average %2.2f\n',lambda, pp, ss, nnn, tot/im_num);
+end
+fprintf('%f %d %d  %d, average %2.2f\n',lambda, pp, ss, nnn, tot/im_num);
    
-end
-end
-    flann_free_index(index);% free the memory      
+flann_free_index(index);% free the memory      
 
-    end
-end
 
