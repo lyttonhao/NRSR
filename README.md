@@ -1,6 +1,6 @@
 # NRSR
 
-Image Completion using Planar Structure Guidance
+Neighborhood Regression for Edge-Preserving Image Super-Resolution
 
 This is a Matlab implementation of the paper.
 
@@ -13,8 +13,9 @@ To run the code, please use the main function Ridge_im.m.
  
 External codes
 
-1. Flann: for fast approximate nearest neighbor searching.
-http://www.cs.ubc.ca/research/flann/
+ 1. Flann: for fast approximate nearest neighbor searching. 
+
+    http://www.cs.ubc.ca/research/flann/
 
 ### Contact 
 
