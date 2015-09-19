@@ -15,7 +15,7 @@ im_num = length( im_dir );
 
 
 patch_size = 9;  
-nSmp        = 100000;  %number of patches to sample
+nSmp        = 1000000;  %number of patches to sample
 par.nFactor = 3;   %magnification factor
 par.win = patch_size;  %patch size
 par.step = 1;          %sample patch step   
@@ -118,7 +118,7 @@ for img = 1:im_num,
         savefile( imLR, ori_HR, im_rgb, result, h1, v1, imB, im_dir(img).name);
 
 end
-fprintf('%f %d %d  %d, average %2.2f\n',lambda, pp, ss, nnn, tot/im_num);
+fprintf('average %2.2f\n',tot/im_num);
    
 flann_free_index(index);% free the memory      
 
