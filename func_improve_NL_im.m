@@ -43,17 +43,19 @@ f = double(im_h(:));
 lamNL = 0.5;
 NLiter = 1;
 
- N            =   Compute_NLM_Matrix( im_h, 5, par );
- NTN          =   N'*N*lamNL;
 
  %gradient descent
-for i = 1:30,
+for i = 1:10,
      f = f + alpha*( weight(:,1) .* (HTY - HTH*f) +  weight(:,2) .* (VTY - VTV*f) );% + weight(:,3).*(LTY - LTL*f) + weight(:,4) .* (RTY - RTR*f)  );
      %Nonlocal similarity
      for iii =1:NLiter,
+          if mod(i, 5) == 1
+              im_h = reshape(f, [row_h, col_h]);
+              N            =   Compute_NLM_Matrix( im_h, 5, par );
+              NTN          =   N'*N*lamNL;
+          end
          f         =  f  - NTN*f;     
-     end
-     
+     end  
 end
 
 %back projection
